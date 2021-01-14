@@ -21,13 +21,13 @@ class ArtistRepository {
 
         var artistModel: LiveData<List<Artist>>? = null
 
-        fun initializeDB(context: Context) : ArtistDatabase? {
+        fun getDatabase(context: Context) : ArtistDatabase? {
             return ArtistDatabase.getDatabase(context)
         }
 
         fun insertArtist(context: Context, artist:List<Artist>) {
 
-            artistDatabase = initializeDB(context)
+            artistDatabase = getDatabase(context)
 
             CoroutineScope(IO).launch {
 
@@ -39,7 +39,7 @@ class ArtistRepository {
 
         fun getArtist(context: Context, name:String) : LiveData<List<Artist>>? {
 
-            artistDatabase = initializeDB(context)
+            artistDatabase = getDatabase(context)
             artistModel = artistDatabase!!.artistDao().getArtists(name)
 
             return  artistModel
